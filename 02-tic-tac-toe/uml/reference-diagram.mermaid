@@ -1,0 +1,66 @@
+classDiagram
+    direction TB
+    class Game {
+        -Board board
+        -List~Player~ players
+        -WinningStrategy winningStrategy
+        -int currentPlayerIndex
+        +play() void
+        -switchTurn() void
+    }
+    class Board {
+        -int size
+        -Mark[][] grid
+        +isValidMove(Cell cell) boolean
+        +place(Cell cell, Mark mark) void
+        +isFull() boolean
+        +getMark(Cell cell) Mark
+        +getSize() int
+        +emptyCells() List~Cell~
+    }
+    class Cell {
+        -int row
+        -int col
+    }
+    class Player {
+        -String name
+        -Mark mark
+        -MoveStrategy strategy
+        +chooseMove(Board board) Cell
+    }
+    class Mark {
+        <<enumeration>>
+        X
+        O
+    }
+    class MoveStrategy {
+        <<interface>>
+        +chooseMove(Board board) Cell
+    }
+    class HumanStrategy {
+        -Scanner input
+        +chooseMove(Board board) Cell
+    }
+    class RandomBotStrategy {
+        -Random random
+        +chooseMove(Board board) Cell
+    }
+    class WinningStrategy {
+        <<interface>>
+        +isWinningMove(Board board, Cell lastMove) boolean
+    }
+    class FullLineWinningStrategy {
+        +isWinningMove(Board board, Cell lastMove) boolean
+    }
+    Game *-- "1" Board : creates and owns
+    Game o-- "2" Player : given at start
+    Game --> "1" WinningStrategy
+    Player --> "1" Mark
+    Player --> "1" MoveStrategy
+    HumanStrategy ..|> MoveStrategy
+    RandomBotStrategy ..|> MoveStrategy
+    FullLineWinningStrategy ..|> WinningStrategy
+    MoveStrategy ..> Board : reads
+    MoveStrategy ..> Cell : returns
+    WinningStrategy ..> Board : reads
+    Board ..> Cell

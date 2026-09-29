@@ -1,0 +1,7 @@
+{
+  // Which folder the Java language server treats as source.
+  // Change this when you start a new problem, e.g. "03-snake-and-ladders".
+  "java.project.sourcePaths": ["02-tic-tac-toe/pseudocode"],
+  "java.project.outputPath": "out/vscode",
+  "java.server.launchMode": "Standard"
+}
